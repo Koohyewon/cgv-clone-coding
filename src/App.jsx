@@ -3,10 +3,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import HeaderBeforeLogin from "./components/HeaderBeforeLogin";
 import HeaderAfterLogin from "./components/HeaderAfterLogin";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import Footer from "./components/Footer";
+import MovieDetail from "./pages/MovieDetail";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,6 +25,7 @@ function App() {
           {isLoggedIn ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/movie-detail" element={<MovieDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 export default function Movie() {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -34,6 +36,11 @@ export default function Movie() {
 
     fetchMovies();
   }, []);
+
+  const handleReserveButton = (movieId) => {
+    const selected = movies.find((movie) => movie.id === movieId);
+    navigate("/movie-detail", { state: { movie: selected } });
+  };
 
   return (
     <>
@@ -84,7 +91,9 @@ export default function Movie() {
                     </div>
                   </div>
 
-                  <button className="w-24 h-7 mr-1.5 rounded-md float-right bg-red-500 text-white text-sm font-bold">
+                  <button
+                    className="w-24 h-7 mr-1.5 rounded-md float-right bg-red-500 text-white text-sm font-bold"
+                    onClick={() => handleReserveButton(movie.id)}>
                     예매하기
                   </button>
                 </div>
