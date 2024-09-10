@@ -13,7 +13,7 @@ const InfoItem = ({ label, value }) => (
 
 const MoviePoster = ({ path, title }) => (
   <img
-    className="w-1/2 object-fill rounded-xl drop-shadow-xl mr-16"
+    className="w-1/2 object-fill rounded-xl shadow-xl shadow-black/50 mr-16"
     src={`https://image.tmdb.org/t/p/w500${path}`}
     alt={title}
   />
@@ -69,7 +69,7 @@ export default function MovieDetailInfo() {
         </div>
       </div>
 
-      <div className="mt-12 px-5">
+      <div className="mt-16 px-5">
         <p className="text-xl mb-4 pb-4 border-b-2 border-black/[.3]">줄거리</p>
         <p className="text-lg text-black/[.5]">{movie.overview}</p>
       </div>
