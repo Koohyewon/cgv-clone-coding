@@ -1,6 +1,37 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
+const InfoItem = ({ label, value }) => (
+  <div className="flex justify-between items-center">
+    <div className="text-gray-600 flex items-center">
+      <span className="bg-[#FB4357] w-1 h-[18px] mr-3" />
+      <span>{label}</span>
+    </div>
+    <span className="text-gray-800">{value}</span>
+  </div>
+);
+
+const MoviePoster = ({ path, title }) => (
+  <img
+    className="w-1/2 object-fill rounded-xl drop-shadow-xl mr-16"
+    src={`https://image.tmdb.org/t/p/w500${path}`}
+    alt={title}
+  />
+);
+
+const MovieTitle = ({ title, originalTitle }) => (
+  <div className="border-b-[3px] border-black/[.2]">
+    <div className="text-3xl">{title}</div>
+    <div className="text-2xl mt-3 mb-4">{originalTitle}</div>
+  </div>
+);
+
+const BookingButton = () => (
+  <button className="h-14 w-full bg-[#FB4357] text-white text-xl rounded-full mt-4">
+    예매하기
+  </button>
+);
+
 export default function MovieDetailInfo() {
   const location = useLocation();
   const movie = location.state?.movie;
@@ -9,48 +40,38 @@ export default function MovieDetailInfo() {
     return <div>영화 정보를 찾을 수 없습니다.</div>;
   }
 
+  const movieInfo = [
+    { label: "언어", value: movie.original_language },
+    { label: "등급", value: movie.adult ? "청소년 관람불가" : "전체 관람가" },
+    { label: "장르", value: movie.genre_ids.join(", ") },
+    { label: "개봉일", value: movie.release_date },
+    { label: "평점", value: movie.vote_average.toFixed(1) },
+  ];
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
-        <div className="md:flex">
-          <div className="md:flex-shrink-0">
-            <img
-              className="h-48 w-full object-cover md:w-48"
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-            />
+    <div className="w-[60%] min-w-[980px] mx-auto p-20 font-bold">
+      <div className="flex justify-center items-center">
+        <MoviePoster path={movie.poster_path} title={movie.title} />
+
+        <div className="w-1/2 text-center">
+          <MovieTitle
+            title={movie.title}
+            originalTitle={movie.original_title}
+          />
+
+          <div className="space-y-3 text-lg px-14 py-8">
+            {movieInfo.map((item, index) => (
+              <InfoItem key={index} label={item.label} value={item.value} />
+            ))}
           </div>
-          <div className="p-8">
-            <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-              {movie.original_language}
-            </div>
-            <h1 className="block mt-1 text-lg leading-tight font-medium text-black">
-              {movie.title}
-            </h1>
-            <p className="mt-2 text-gray-500">{movie.overview}</p>
-            <div className="mt-4">
-              <span className="text-gray-500">개봉일: </span>
-              <span className="font-semibold">{movie.release_date}</span>
-            </div>
-            <div className="mt-2">
-              <span className="text-gray-500">평점: </span>
-              <span className="font-semibold">
-                {movie.vote_average.toFixed(1)}
-              </span>
-            </div>
-            <div className="mt-2">
-              <span className="text-gray-500">인기도: </span>
-              <span className="font-semibold">
-                {movie.popularity.toFixed(1)}
-              </span>
-            </div>
-            <div className="mt-4">
-              <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                {movie.adult ? "청소년 관람불가" : "전체 관람가"}
-              </span>
-            </div>
-          </div>
+
+          <BookingButton />
         </div>
+      </div>
+
+      <div className="mt-12 px-5">
+        <p className="text-xl mb-4 pb-4 border-b-2 border-black/[.3]">줄거리</p>
+        <p className="text-lg text-black/[.5]">{movie.overview}</p>
       </div>
     </div>
   );

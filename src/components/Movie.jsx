@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { FaRegClock } from "react-icons/fa";
+import { FaRegThumbsUp } from "react-icons/fa";
+
 export const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 export default function Movie() {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
+  const [sortOrder, setSortOrder] = useState("1");
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -37,6 +41,27 @@ export default function Movie() {
     fetchMovies();
   }, []);
 
+  //셀렉트 박스 정렬방식
+  const sortMovies = (order) => {
+    let sortedMovies = [...movies];
+    if (order === "1") {
+      // Sort by rating (descending)
+      sortedMovies.sort((a, b) => b.vote_average - a.vote_average);
+    } else if (order === "2") {
+      // Sort by release date (most recent first)
+      sortedMovies.sort(
+        (a, b) => new Date(b.release_date) - new Date(a.release_date)
+      );
+    }
+    setMovies(sortedMovies);
+  };
+
+  const handleSortChange = (event) => {
+    const newSortOrder = event.target.value;
+    setSortOrder(newSortOrder);
+    sortMovies(newSortOrder);
+  };
+
   const navigateToMovieDetail = (movieId) => {
     const selected = movies.find((movie) => movie.id === movieId);
     navigate("/movie-detail", { state: { movie: selected } });
@@ -53,7 +78,21 @@ export default function Movie() {
           무비차트
         </div>
 
-        <div className="mt-10 grid grid-cols-4 gap-x-4 gap-y-16">
+        <div className="mt-4 flex justify-end items-center pr-7">
+          <label htmlFor="order_type" className="mr-2">
+            정렬 :
+          </label>
+          <select
+            id="order_type"
+            value={sortOrder}
+            onChange={handleSortChange}
+            className="p-1 border rounded">
+            <option value="1">평점순</option>
+            <option value="2">최신순</option>
+          </select>
+        </div>
+
+        <div className="mt-8 grid grid-cols-4 gap-x-4 gap-y-16">
           {movies.map((movie, index) => (
             <React.Fragment key={movie.id}>
               {index === 3 && (
@@ -89,11 +128,17 @@ export default function Movie() {
                       {movie.title}
                     </div>
 
-                    <div className="flex items-center mt-2 font-bold text-sm">
-                      <div>개봉일 {movie.release_date}</div>
+                    <div className="flex flex-wrap items-center mt-2 font-bold text-sm">
+                      <div className="flex items-center">
+                        <FaRegClock />
+                        <span className="mx-1">개봉일</span>
+                        <span>{movie.release_date}</span>
+                      </div>
                       <div className="mx-2 h-4 w-px bg-gray-300"></div>
                       <div className="flex items-center">
-                        평점 {movie.vote_average.toFixed(1)}
+                        <FaRegThumbsUp />
+                        <span className="mx-1">평점</span>
+                        <span>{movie.vote_average.toFixed(1)}</span>
                       </div>
                     </div>
                   </div>

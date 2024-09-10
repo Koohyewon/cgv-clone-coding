@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function Nav() {
   return (
     <>
-      <div className="border-t-2 border-t-[#E9E9E9] border-b-2 border-b-red-500">
+      <div className="min-w-[980px] border-t-2 border-t-[#E9E9E9] border-b-2 border-b-red-500">
         <div className="w-[65%] min-w-[980px] mx-auto h-16 flex items-center">
           <ul className="flex text-lg font-bold">
             <NavLink
