@@ -37,9 +37,13 @@ export default function Movie() {
     fetchMovies();
   }, []);
 
-  const handleReserveButton = (movieId) => {
+  const navigateToMovieDetail = (movieId) => {
     const selected = movies.find((movie) => movie.id === movieId);
     navigate("/movie-detail", { state: { movie: selected } });
+  };
+
+  const handleReserveButton = () => {
+    alert("예매 페이지 이동");
   };
 
   return (
@@ -74,11 +78,14 @@ export default function Movie() {
                   <img
                     src={`${IMG_BASE_URL}${movie.poster_path}`}
                     alt={movie.title}
-                    className="w-full max-h-[330px] rounded-b-lg"
+                    className="w-full max-h-[330px] rounded-b-lg cursor-pointer"
+                    onClick={() => navigateToMovieDetail(movie.id)}
                   />
 
                   <div className="px-1.5 pt-2 pb-4">
-                    <div className="font-bold h-5 overflow-hidden">
+                    <div
+                      className="font-bold h-5 overflow-hidden cursor-pointer"
+                      onClick={() => navigateToMovieDetail(movie.id)}>
                       {movie.title}
                     </div>
 
@@ -93,7 +100,7 @@ export default function Movie() {
 
                   <button
                     className="w-24 h-7 mr-1.5 rounded-md float-right bg-red-500 text-white text-sm font-bold"
-                    onClick={() => handleReserveButton(movie.id)}>
+                    onClick={handleReserveButton}>
                     예매하기
                   </button>
                 </div>
