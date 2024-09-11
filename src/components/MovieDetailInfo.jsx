@@ -22,7 +22,7 @@ const MoviePoster = ({ path, title }) => (
 const MovieTitle = ({ title, originalTitle }) => (
   <div className="border-b-[3px] border-black/[.2]">
     <div className="text-3xl">{title}</div>
-    <div className="text-2xl mt-3 mb-4">{originalTitle}</div>
+    <div className="text-2xl mt-3 mb-8">{originalTitle}</div>
   </div>
 );
 
@@ -49,7 +49,7 @@ export default function MovieDetailInfo() {
   ];
 
   return (
-    <div className="w-[60%] min-w-[980px] mx-auto p-20 font-bold">
+    <div className="w-[65%] min-w-[980px] mx-auto p-20 font-bold">
       <div className="flex justify-center items-center">
         <MoviePoster path={movie.poster_path} title={movie.title} />
 
@@ -59,7 +59,7 @@ export default function MovieDetailInfo() {
             originalTitle={movie.original_title}
           />
 
-          <div className="space-y-3 text-lg px-14 py-8">
+          <div className="space-y-3 text-lg px-14 my-8">
             {movieInfo.map((item, index) => (
               <InfoItem key={index} label={item.label} value={item.value} />
             ))}
