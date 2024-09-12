@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../components/Nav";
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -40,8 +39,6 @@ export default function Login() {
 
   return (
     <>
-      <Nav />
-
       <div className="min-w-[350px] w-1/4 mx-auto my-20">
         <div className="text-2xl font-bold">
           아이디와 비밀번호를

@@ -3,17 +3,20 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import HeaderBeforeLogin from "./components/HeaderBeforeLogin";
 import HeaderAfterLogin from "./components/HeaderAfterLogin";
+import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import MovieDetail from "./pages/MovieDetail";
+import Ticket from "./pages/Ticket";
 
 const routes = [
   { path: "/", element: <Home /> },
   { path: "/movie-detail", element: <MovieDetail /> },
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
+  { path: "/ticket", element: <Ticket /> },
 ];
 
 function App() {
@@ -30,7 +33,17 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <BrowserRouter>
         <div className="flex-grow">
-          {isLoggedIn ? <HeaderAfterLogin /> : <HeaderBeforeLogin />}
+          {isLoggedIn ? (
+            <>
+              <HeaderAfterLogin />
+              <Nav />
+            </>
+          ) : (
+            <>
+              <HeaderBeforeLogin />
+              <Nav />
+            </>
+          )}
           <Routes>
             {routes.map((route) => (
               <Route
