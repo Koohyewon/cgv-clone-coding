@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="flex justify-between items-center">
@@ -26,15 +26,23 @@ const MovieTitle = ({ title, originalTitle }) => (
   </div>
 );
 
-const BookingButton = () => (
-  <button className="h-14 w-full bg-[#FB4357] text-white text-xl rounded-full mt-4">
+const BookingButton = ({ onClick }) => (
+  <button
+    className="h-14 w-full bg-[#FB4357] text-white text-xl rounded-full mt-4"
+    onClick={onClick}
+  >
     예매하기
   </button>
 );
 
 export default function MovieDetailInfo() {
   const location = useLocation();
+  const navigate = useNavigate();
   const movie = location.state?.movie;
+
+  const navigateToTicketPage = () => {
+    navigate("/ticket", { state: { movie: movie } });
+  };
 
   if (!movie) {
     return <div>영화 정보를 찾을 수 없습니다.</div>;
@@ -65,7 +73,7 @@ export default function MovieDetailInfo() {
             ))}
           </div>
 
-          <BookingButton />
+          <BookingButton onClick={navigateToTicketPage} />
         </div>
       </div>
 

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const navItems = [
   { to: "/", text: "영화", exact: true },
-  { to: "/login", text: "예매" },
+  { to: "/ticket", text: "예매" },
   { to: "/signup", text: "극장" },
 ];
 
@@ -21,7 +21,8 @@ export default function Nav() {
                 `${index === 0 ? "pl-0 mr-4" : "mx-4"} p-4 ${
                   isActive ? "text-red-500" : "text-black"
                 }`
-              }>
+              }
+            >
               {item.text}
             </NavLink>
           ))}

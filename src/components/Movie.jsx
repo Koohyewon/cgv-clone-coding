@@ -67,8 +67,9 @@ export default function Movie() {
     navigate("/movie-detail", { state: { movie: selected } });
   };
 
-  const handleReserveButton = () => {
-    alert("예매 페이지 이동");
+  const navigateToTicketPage = (movieId) => {
+    const selected = movies.find((movie) => movie.id === movieId);
+    navigate("/ticket", { state: { movie: selected } });
   };
 
   return (
@@ -86,7 +87,8 @@ export default function Movie() {
             id="order_type"
             value={sortOrder}
             onChange={handleSortChange}
-            className="p-1 border rounded">
+            className="p-1 border rounded"
+          >
             <option value="1">평점순</option>
             <option value="2">최신순</option>
           </select>
@@ -110,7 +112,8 @@ export default function Movie() {
                   <div
                     className={`h-9 mb-1 rounded-t-lg text-white text-xl font-bold flex items-center justify-center ${
                       index < 3 ? "bg-[#FB4357]" : "bg-black"
-                    }`}>
+                    }`}
+                  >
                     No.{index < 3 ? index + 1 : index + 2}
                   </div>
 
@@ -124,7 +127,8 @@ export default function Movie() {
                   <div className="px-1.5 pt-2 pb-4">
                     <div
                       className="font-bold h-5 overflow-hidden cursor-pointer"
-                      onClick={() => navigateToMovieDetail(movie.id)}>
+                      onClick={() => navigateToMovieDetail(movie.id)}
+                    >
                       {movie.title}
                     </div>
 
@@ -145,7 +149,8 @@ export default function Movie() {
 
                   <button
                     className="w-24 h-7 mr-1.5 rounded-md float-right bg-red-500 text-white text-sm font-bold"
-                    onClick={handleReserveButton}>
+                    onClick={() => navigateToTicketPage(movie.id)}
+                  >
                     예매하기
                   </button>
                 </div>
