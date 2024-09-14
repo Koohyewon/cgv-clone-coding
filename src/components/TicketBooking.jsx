@@ -1,19 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const MovieBooking = () => {
   const [selectedMovie, setSelectedMovie] =
     useState("임영웅 | 아임 히어로 더 파이널");
   const [selectedTheater, setSelectedTheater] = useState("강남");
   const [selectedDate, setSelectedDate] = useState("2024.8.24");
+  const [movies, setMovies] = useState([]);
 
-  const movies = [
-    "임영웅 | 아임 히어로 더 파이널",
-    "예매율1 : 트롤루루스",
-    "트랜스포터",
-    "놀면서 뭐하니",
-    "행복의나라",
-    "빅토리",
-  ];
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const options = {
+        method: "GET",
+        url: "https://api.themoviedb.org/3/movie/popular",
+        params: { language: "ko-kr", page: "1" },
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMDBmMjRjOTE3NTQ5NzQ3ZDNmYzdhOTRlOTU3YTM3MyIsIm5iZiI6MTcyMDY3NTI2OC44NDU0NDMsInN1YiI6IjY2OGYyZjE2NzI3ZTNiZDI3M2Y2YmIyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OV5n3pRizgsI70At8IHnwduNXCEHSp8ysSQwmJGU9uY",
+        },
+      };
+
+      try {
+        const response = await axios.request(options);
+        setMovies(response.data.results);
+        if (response.data.results.length > 0) {
+          setSelectedMovie(response.data.results[0].title);
+        }
+        console.log(response.data.results);
+      } catch (error) {
+        console.error("API를 불러오지 못했습니다.", error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
 
   const theaters = [
     "서울",
@@ -64,10 +85,10 @@ const MovieBooking = () => {
                 <li
                   key={index}
                   className={`cursor-pointer p-1 ${
-                    selectedMovie === movie ? "bg-gray-200" : ""
+                    selectedMovie === movie.title ? "bg-gray-200" : ""
                   }`}
-                  onClick={() => setSelectedMovie(movie)}>
-                  {movie}
+                  onClick={() => setSelectedMovie(movie.title)}>
+                  {movie.title}
                 </li>
               ))}
             </ul>
