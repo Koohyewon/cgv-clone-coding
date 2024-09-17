@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const MovieBooking = () => {
-  const [selectedMovie, setSelectedMovie] =
-    useState("임영웅 | 아임 히어로 더 파이널");
+  const [selectedMovie, setSelectedMovie] = useState("");
   const [selectedTheater, setSelectedTheater] = useState("강남");
-  const [selectedDate, setSelectedDate] = useState("2024.8.24");
+  const [selectedDate, setSelectedDate] = useState("");
   const [movies, setMovies] = useState([]);
+  const [dateRange, setDateRange] = useState([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -27,14 +27,38 @@ const MovieBooking = () => {
         if (response.data.results.length > 0) {
           setSelectedMovie(response.data.results[0].title);
         }
-        console.log(response.data.results);
       } catch (error) {
         console.error("API를 불러오지 못했습니다.", error);
       }
     };
 
     fetchMovies();
+    initializeDates();
   }, []);
+
+  const initializeDates = () => {
+    const today = new Date();
+    const twoWeeksLater = new Date(today.getTime() + 13 * 24 * 60 * 60 * 1000);
+    const dates = [];
+
+    for (
+      let d = new Date(today);
+      d <= twoWeeksLater;
+      d.setDate(d.getDate() + 1)
+    ) {
+      dates.push(new Date(d));
+    }
+
+    setDateRange(dates);
+    setSelectedDate(formatDate(today));
+  };
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}.${month}.${day}`;
+  };
 
   const theaters = [
     "서울",
@@ -62,9 +86,8 @@ const MovieBooking = () => {
     { time: "22:10", seats: "124석" },
   ];
 
-  const getWeekday = (year, month, day) => {
+  const getWeekday = (date) => {
     const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
-    const date = new Date(year, month - 1, day);
     return weekdays[date.getDay()];
   };
 
@@ -111,25 +134,30 @@ const MovieBooking = () => {
           <div className="w-1/4 p-4 border-r">
             <h2 className="font-bold mb-2">날짜</h2>
             <div className="text-center">
-              <div className="font-bold text-3xl">8</div>
-              <div>2024</div>
+              <div className="font-bold text-3xl">
+                {dateRange.length > 0 ? dateRange[0].getMonth() + 1 : ""}
+              </div>
+              <div>
+                {dateRange.length > 0 ? dateRange[0].getFullYear() : ""}
+              </div>
               <div className="flex flex-col items-center mt-4">
-                {[24, 25, 26, 27, 28, 29, 30, 31].map((day) => {
-                  const weekday = getWeekday(2024, 8, day);
+                {dateRange.map((date, index) => {
+                  const weekday = getWeekday(date);
                   const weekdayColor = getWeekdayColor(weekday);
+                  const formattedDate = formatDate(date);
                   return (
                     <button
-                      key={day}
+                      key={index}
                       className={`w-full flex justify-between items-center px-4 py-2 m-1 rounded ${
-                        selectedDate === `2024.8.${day}`
+                        selectedDate === formattedDate
                           ? "bg-red-500 text-white"
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
-                      onClick={() => setSelectedDate(`2024.8.${day}`)}>
-                      <span>{day}</span>
+                      onClick={() => setSelectedDate(formattedDate)}>
+                      <span>{date.getDate()}</span>
                       <span
                         className={
-                          selectedDate === `2024.8.${day}`
+                          selectedDate === formattedDate
                             ? "text-white"
                             : weekdayColor
                         }>
