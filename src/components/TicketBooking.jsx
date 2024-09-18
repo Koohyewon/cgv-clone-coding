@@ -98,11 +98,13 @@ const MovieBooking = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+    <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto py-4">
+      <div className="bg-[#F2F0E5] shadow-md rounded-lg overflow-hidden">
         <div className="flex border-b">
-          <div className="w-1/4 p-4 border-r">
-            <h2 className="font-bold mb-2">영화</h2>
+          <div className="w-1/4 border-r">
+            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
+              영화
+            </h2>
             <ul>
               {movies.map((movie, index) => (
                 <li
@@ -116,8 +118,11 @@ const MovieBooking = () => {
               ))}
             </ul>
           </div>
-          <div className="w-1/4 p-4 border-r">
-            <h2 className="font-bold mb-2">극장</h2>
+
+          <div className="w-1/4 border-r">
+            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
+              극장
+            </h2>
             <ul>
               {theaters.map((theater, index) => (
                 <li
@@ -131,8 +136,11 @@ const MovieBooking = () => {
               ))}
             </ul>
           </div>
-          <div className="w-1/4 p-4 border-r">
-            <h2 className="font-bold mb-2">날짜</h2>
+
+          <div className="w-1/4 border-r">
+            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
+              날짜
+            </h2>
             <div className="text-center">
               <div className="font-bold text-3xl">
                 {dateRange.length > 0 ? dateRange[0].getMonth() + 1 : ""}
@@ -169,8 +177,11 @@ const MovieBooking = () => {
               </div>
             </div>
           </div>
-          <div className="w-1/4 p-4">
-            <h2 className="font-bold mb-2">시간</h2>
+
+          <div className="w-1/4">
+            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
+              시간
+            </h2>
             <div className="grid grid-cols-2 gap-2">
               {times.map(({ time, seats }, index) => (
                 <button key={index} className="bg-gray-100 p-2 text-sm rounded">
@@ -181,6 +192,7 @@ const MovieBooking = () => {
             </div>
           </div>
         </div>
+
         <div className="bg-gray-800 text-white p-4 flex justify-between items-center">
           <div>
             <h3 className="font-bold">{selectedMovie}</h3>
@@ -188,6 +200,7 @@ const MovieBooking = () => {
               {selectedTheater} | {selectedDate}
             </p>
           </div>
+
           <button className="bg-red-600 text-white px-6 py-2 rounded">
             좌석선택
           </button>
