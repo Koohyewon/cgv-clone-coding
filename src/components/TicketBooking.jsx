@@ -7,6 +7,8 @@ const MovieBooking = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [movies, setMovies] = useState([]);
   const [dateRange, setDateRange] = useState([]);
+  const [currentMonth, setCurrentMonth] = useState(null);
+  const [currentYear, setCurrentYear] = useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -51,6 +53,8 @@ const MovieBooking = () => {
 
     setDateRange(dates);
     setSelectedDate(formatDate(today));
+    setCurrentMonth(today.getMonth());
+    setCurrentYear(today.getFullYear());
   };
 
   const formatDate = (date) => {
@@ -97,103 +101,127 @@ const MovieBooking = () => {
     return "text-gray-700";
   };
 
+  const renderDateButtons = () => {
+    let lastRenderedMonth = null;
+    let lastRenderedYear = null;
+
+    return dateRange.map((date, index) => {
+      const weekday = getWeekday(date);
+      const weekdayColor = getWeekdayColor(weekday);
+      const formattedDate = formatDate(date);
+      const month = date.getMonth();
+      const year = date.getFullYear();
+
+      let monthYearHeader = null;
+      if (month !== lastRenderedMonth || year !== lastRenderedYear) {
+        monthYearHeader = (
+          <div
+            key={`header-${year}-${month}`}
+            className="w-full text-center mt-4 mb-2">
+            <div className="font-bold text-3xl">{month + 1}</div>
+            <div>{year}</div>
+          </div>
+        );
+        lastRenderedMonth = month;
+        lastRenderedYear = year;
+      }
+
+      const dateButton = (
+        <button
+          key={index}
+          className={`w-full flex justify-between items-center px-4 py-2 m-1 rounded ${
+            selectedDate === formattedDate
+              ? "bg-red-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+          onClick={() => setSelectedDate(formattedDate)}>
+          <span>{date.getDate()}</span>
+          <span
+            className={
+              selectedDate === formattedDate ? "text-white" : weekdayColor
+            }>
+            {weekday}
+          </span>
+        </button>
+      );
+
+      return monthYearHeader ? [monthYearHeader, dateButton] : dateButton;
+    });
+  };
+
   return (
-    <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto py-4">
-      <div className="bg-[#F2F0E5] shadow-md rounded-lg overflow-hidden">
-        <div className="flex border-b">
-          <div className="w-1/4 border-r">
-            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
-              영화
-            </h2>
-            <ul>
-              {movies.map((movie, index) => (
-                <li
-                  key={index}
-                  className={`cursor-pointer p-1 ${
-                    selectedMovie === movie.title ? "bg-gray-200" : ""
-                  }`}
-                  onClick={() => setSelectedMovie(movie.title)}>
-                  {movie.title}
-                </li>
-              ))}
-            </ul>
-          </div>
+    <>
+      <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8 border-2 border-[#D4D3C9]">
+        <div className="bg-[#F2F0E5] overflow-hidden">
+          <div className="flex border-b h-[600px]">
+            <div className="w-1/4 border-r flex flex-col">
+              <h2 className="w-full h-9 bg-black text-white font-bold mb-2 flex justify-center items-center flex-shrink-0">
+                영화
+              </h2>
+              <ul className="overflow-auto flex-grow">
+                {movies.map((movie, index) => (
+                  <li
+                    key={index}
+                    className={`cursor-pointer p-1 ${
+                      selectedMovie === movie.title ? "bg-gray-200" : ""
+                    }`}
+                    onClick={() => setSelectedMovie(movie.title)}>
+                    {movie.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="w-1/4 border-r">
-            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
-              극장
-            </h2>
-            <ul>
-              {theaters.map((theater, index) => (
-                <li
-                  key={index}
-                  className={`cursor-pointer p-1 ${
-                    selectedTheater === theater ? "bg-gray-200" : ""
-                  }`}
-                  onClick={() => setSelectedTheater(theater)}>
-                  {theater}
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div className="w-1/4 border-r flex flex-col">
+              <h2 className="w-full h-9 bg-black text-white text-center font-bold mb-2 flex justify-center items-center flex-shrink-0">
+                극장
+              </h2>
+              <ul className="overflow-auto flex-grow">
+                {theaters.map((theater, index) => (
+                  <li
+                    key={index}
+                    className={`cursor-pointer p-1 ${
+                      selectedTheater === theater ? "bg-gray-200" : ""
+                    }`}
+                    onClick={() => setSelectedTheater(theater)}>
+                    {theater}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="w-1/4 border-r">
-            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
-              날짜
-            </h2>
-            <div className="text-center">
-              <div className="font-bold text-3xl">
-                {dateRange.length > 0 ? dateRange[0].getMonth() + 1 : ""}
-              </div>
-              <div>
-                {dateRange.length > 0 ? dateRange[0].getFullYear() : ""}
-              </div>
-              <div className="flex flex-col items-center mt-4">
-                {dateRange.map((date, index) => {
-                  const weekday = getWeekday(date);
-                  const weekdayColor = getWeekdayColor(weekday);
-                  const formattedDate = formatDate(date);
-                  return (
-                    <button
-                      key={index}
-                      className={`w-full flex justify-between items-center px-4 py-2 m-1 rounded ${
-                        selectedDate === formattedDate
-                          ? "bg-red-500 text-white"
-                          : "bg-gray-200 hover:bg-gray-300"
-                      }`}
-                      onClick={() => setSelectedDate(formattedDate)}>
-                      <span>{date.getDate()}</span>
-                      <span
-                        className={
-                          selectedDate === formattedDate
-                            ? "text-white"
-                            : weekdayColor
-                        }>
-                        {weekday}
-                      </span>
-                    </button>
-                  );
-                })}
+            <div className="w-1/4 border-r flex flex-col">
+              <h2 className="w-full h-9 bg-black text-white text-center font-bold mb-2 flex justify-center items-center flex-shrink-0">
+                날짜
+              </h2>
+              <div className="text-center overflow-auto flex-grow">
+                <div className="flex flex-col items-center">
+                  {renderDateButtons()}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="w-1/4">
-            <h2 className="w-full bg-black text-white text-center font-bold mb-2">
-              시간
-            </h2>
-            <div className="grid grid-cols-2 gap-2">
-              {times.map(({ time, seats }, index) => (
-                <button key={index} className="bg-gray-100 p-2 text-sm rounded">
-                  <div className="font-bold">{time}</div>
-                  <div className="text-gray-600">{seats}</div>
-                </button>
-              ))}
+            <div className="w-1/4 flex flex-col">
+              <h2 className="w-full h-9 bg-black text-white text-center font-bold mb-2 flex justify-center items-center flex-shrink-0">
+                시간
+              </h2>
+              <div className="grid grid-cols-2 gap-2">
+                {times.map(({ time, seats }, index) => (
+                  <button
+                    key={index}
+                    className="bg-gray-100 p-2 text-sm rounded">
+                    <div className="font-bold">{time}</div>
+                    <div className="text-gray-600">{seats}</div>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="bg-gray-800 text-white p-4 flex justify-between items-center">
+      <div className="bg-black text-white p-4 ">
+        <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto py-4 flex justify-between items-center">
           <div>
             <h3 className="font-bold">{selectedMovie}</h3>
             <p>
@@ -206,7 +234,7 @@ const MovieBooking = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
