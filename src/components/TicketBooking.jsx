@@ -3,7 +3,7 @@ import axios from "axios";
 
 const MovieBooking = () => {
   const [selectedMovie, setSelectedMovie] = useState("");
-  const [selectedTheater, setSelectedTheater] = useState("강남");
+  const [selectedTheater, setSelectedTheater] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [movies, setMovies] = useState([]);
   const [dateRange, setDateRange] = useState([]);
@@ -117,7 +117,8 @@ const MovieBooking = () => {
         monthYearHeader = (
           <div
             key={`header-${year}-${month}`}
-            className="w-full text-center mt-4 mb-2">
+            className="w-full text-center mb-2"
+          >
             <div className="font-bold text-3xl">{month + 1}</div>
             <div>{year}</div>
           </div>
@@ -129,19 +130,21 @@ const MovieBooking = () => {
       const dateButton = (
         <button
           key={index}
-          className={`w-full flex justify-between items-center px-4 py-2 m-1 rounded ${
+          className={`w-full flex justify-between items-center px-2 py-1 my-1 ${
             selectedDate === formattedDate
-              ? "bg-red-500 text-white"
-              : "bg-gray-200 hover:bg-gray-300"
+              ? "bg-[#333333] text-white border-2 border-black"
+              : "bg-[#F2F0E5]"
           }`}
-          onClick={() => setSelectedDate(formattedDate)}>
-          <span>{date.getDate()}</span>
+          onClick={() => setSelectedDate(formattedDate)}
+        >
           <span
             className={
               selectedDate === formattedDate ? "text-white" : weekdayColor
-            }>
+            }
+          >
             {weekday}
           </span>
+          <span>{date.getDate()}</span>
         </button>
       );
 
@@ -154,62 +157,69 @@ const MovieBooking = () => {
       <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8 border-2 border-[#D4D3C9]">
         <div className="bg-[#F2F0E5] overflow-hidden">
           <div className="flex border-b h-[600px]">
-            <div className="w-1/4 border-r flex flex-col">
-              <h2 className="w-full h-9 bg-black text-white font-bold mb-2 flex justify-center items-center flex-shrink-0">
+            <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
+              <h2 className="w-full h-9 bg-[#333333] text-white font-bold flex justify-center items-center flex-shrink-0">
                 영화
               </h2>
-              <ul className="overflow-auto flex-grow">
+              <ul className="overflow-auto flex-grow p-4">
                 {movies.map((movie, index) => (
                   <li
                     key={index}
                     className={`cursor-pointer p-1 ${
-                      selectedMovie === movie.title ? "bg-gray-200" : ""
+                      selectedMovie === movie.title
+                        ? "bg-[#333333] text-white"
+                        : ""
                     }`}
-                    onClick={() => setSelectedMovie(movie.title)}>
+                    onClick={() => setSelectedMovie(movie.title)}
+                  >
                     {movie.title}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="w-1/4 border-r flex flex-col">
-              <h2 className="w-full h-9 bg-black text-white text-center font-bold mb-2 flex justify-center items-center flex-shrink-0">
+            <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
+              <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
                 극장
               </h2>
-              <ul className="overflow-auto flex-grow">
+              <ul className="overflow-auto flex-grow p-4">
                 {theaters.map((theater, index) => (
                   <li
                     key={index}
                     className={`cursor-pointer p-1 ${
-                      selectedTheater === theater ? "bg-gray-200" : ""
+                      selectedTheater === theater
+                        ? "bg-[#333333] text-white"
+                        : ""
                     }`}
-                    onClick={() => setSelectedTheater(theater)}>
+                    onClick={() => setSelectedTheater(theater)}
+                  >
                     {theater}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="w-1/4 border-r flex flex-col">
-              <h2 className="w-full h-9 bg-black text-white text-center font-bold mb-2 flex justify-center items-center flex-shrink-0">
+            <div className="w-[9.09%] border-r-2 border-[#D4D3C9] flex flex-col">
+              <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
                 날짜
               </h2>
-              <div className="text-center overflow-auto flex-grow">
+              <div className="text-center overflow-auto flex-grow px-2.5 py-4">
                 <div className="flex flex-col items-center">
                   {renderDateButtons()}
                 </div>
               </div>
             </div>
 
-            <div className="w-1/4 flex flex-col">
-              <h2 className="w-full h-9 bg-black text-white text-center font-bold mb-2 flex justify-center items-center flex-shrink-0">
+            <div className="w-[36.36%] flex flex-col">
+              <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
                 시간
               </h2>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 p-4">
                 {times.map(({ time, seats }, index) => (
                   <button
                     key={index}
-                    className="bg-gray-100 p-2 text-sm rounded">
+                    className="bg-gray-100 p-2 text-sm rounded"
+                  >
                     <div className="font-bold">{time}</div>
                     <div className="text-gray-600">{seats}</div>
                   </button>
