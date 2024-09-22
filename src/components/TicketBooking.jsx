@@ -15,7 +15,7 @@ const MovieBooking = () => {
       const options = {
         method: "GET",
         url: "https://api.themoviedb.org/3/movie/popular",
-        params: { language: "ko-kr", page: "1" },
+        params: { language: "ko-kr", page: "2" },
         headers: {
           accept: "application/json",
           Authorization:
@@ -117,8 +117,7 @@ const MovieBooking = () => {
         monthYearHeader = (
           <div
             key={`header-${year}-${month}`}
-            className="w-full text-center mb-2"
-          >
+            className="w-full text-center mb-2">
             <div className="font-bold text-3xl">{month + 1}</div>
             <div>{year}</div>
           </div>
@@ -135,13 +134,11 @@ const MovieBooking = () => {
               ? "bg-[#333333] text-white border-2 border-black"
               : "bg-[#F2F0E5]"
           }`}
-          onClick={() => setSelectedDate(formattedDate)}
-        >
+          onClick={() => setSelectedDate(formattedDate)}>
           <span
             className={
               selectedDate === formattedDate ? "text-white" : weekdayColor
-            }
-          >
+            }>
             {weekday}
           </span>
           <span>{date.getDate()}</span>
@@ -170,8 +167,7 @@ const MovieBooking = () => {
                         ? "bg-[#333333] text-white"
                         : ""
                     }`}
-                    onClick={() => setSelectedMovie(movie.title)}
-                  >
+                    onClick={() => setSelectedMovie(movie.title)}>
                     {movie.title}
                   </li>
                 ))}
@@ -191,8 +187,7 @@ const MovieBooking = () => {
                         ? "bg-[#333333] text-white"
                         : ""
                     }`}
-                    onClick={() => setSelectedTheater(theater)}
-                  >
+                    onClick={() => setSelectedTheater(theater)}>
                     {theater}
                   </li>
                 ))}
@@ -218,8 +213,7 @@ const MovieBooking = () => {
                 {times.map(({ time, seats }, index) => (
                   <button
                     key={index}
-                    className="bg-gray-100 p-2 text-sm rounded"
-                  >
+                    className="bg-gray-100 p-2 text-sm rounded">
                     <div className="font-bold">{time}</div>
                     <div className="text-gray-600">{seats}</div>
                   </button>
