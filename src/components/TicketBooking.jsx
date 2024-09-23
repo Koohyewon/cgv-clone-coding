@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { IoMdRefresh } from "react-icons/io";
 
 const MovieBooking = () => {
   const [selectedMovie, setSelectedMovie] = useState("");
@@ -15,7 +16,7 @@ const MovieBooking = () => {
       const options = {
         method: "GET",
         url: "https://api.themoviedb.org/3/movie/popular",
-        params: { language: "ko-kr", page: "2" },
+        params: { language: "ko-kr", page: "1" },
         headers: {
           accept: "application/json",
           Authorization:
@@ -117,9 +118,9 @@ const MovieBooking = () => {
         monthYearHeader = (
           <div
             key={`header-${year}-${month}`}
-            className="w-full text-center mb-2">
+            className="w-full text-center mb-2 text-[#666666]">
+            <div className="font-bold text-sm">{year}</div>
             <div className="font-bold text-3xl">{month + 1}</div>
-            <div>{year}</div>
           </div>
         );
         lastRenderedMonth = month;
@@ -151,73 +152,82 @@ const MovieBooking = () => {
 
   return (
     <>
-      <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8 border-2 border-[#D4D3C9]">
-        <div className="bg-[#F2F0E5] overflow-hidden">
-          <div className="flex border-b h-[600px]">
-            <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
-              <h2 className="w-full h-9 bg-[#333333] text-white font-bold flex justify-center items-center flex-shrink-0">
-                영화
-              </h2>
-              <ul className="overflow-auto flex-grow p-4">
-                {movies.map((movie, index) => (
-                  <li
-                    key={index}
-                    className={`cursor-pointer p-1 ${
-                      selectedMovie === movie.title
-                        ? "bg-[#333333] text-white"
-                        : ""
-                    }`}
-                    onClick={() => setSelectedMovie(movie.title)}>
-                    {movie.title}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8">
+        <div className="flex justify-end mb-3">
+          <button className="flex items-center py-0.5 px-2 bg-[#F2F0E5] rounded border border-black text-sm">
+            <IoMdRefresh size={24} className="mr-1" />
+            예매 다시하기
+          </button>
+        </div>
 
-            <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
-              <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
-                극장
-              </h2>
-              <ul className="overflow-auto flex-grow p-4">
-                {theaters.map((theater, index) => (
-                  <li
-                    key={index}
-                    className={`cursor-pointer p-1 ${
-                      selectedTheater === theater
-                        ? "bg-[#333333] text-white"
-                        : ""
-                    }`}
-                    onClick={() => setSelectedTheater(theater)}>
-                    {theater}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="border-2 border-[#D4D3C9]">
+          <div className="bg-[#F2F0E5] overflow-hidden">
+            <div className="flex border-b h-[600px]">
+              <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
+                <h2 className="w-full h-9 bg-[#333333] text-white font-bold flex justify-center items-center flex-shrink-0">
+                  영화
+                </h2>
+                <ul className="overflow-auto flex-grow p-4">
+                  {movies.map((movie, index) => (
+                    <li
+                      key={index}
+                      className={`cursor-pointer p-1 ${
+                        selectedMovie === movie.title
+                          ? "bg-[#333333] text-white"
+                          : ""
+                      }`}
+                      onClick={() => setSelectedMovie(movie.title)}>
+                      {movie.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            <div className="w-[9.09%] border-r-2 border-[#D4D3C9] flex flex-col">
-              <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
-                날짜
-              </h2>
-              <div className="text-center overflow-auto flex-grow px-2.5 py-4">
-                <div className="flex flex-col items-center">
-                  {renderDateButtons()}
+              <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
+                <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
+                  극장
+                </h2>
+                <ul className="overflow-auto flex-grow p-4">
+                  {theaters.map((theater, index) => (
+                    <li
+                      key={index}
+                      className={`cursor-pointer p-1 ${
+                        selectedTheater === theater
+                          ? "bg-[#333333] text-white"
+                          : ""
+                      }`}
+                      onClick={() => setSelectedTheater(theater)}>
+                      {theater}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="w-[9.09%] border-r-2 border-[#D4D3C9] flex flex-col">
+                <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
+                  날짜
+                </h2>
+                <div className="text-center overflow-auto flex-grow px-2.5 py-4">
+                  <div className="flex flex-col items-center">
+                    {renderDateButtons()}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="w-[36.36%] flex flex-col">
-              <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
-                시간
-              </h2>
-              <div className="grid grid-cols-2 gap-2 p-4">
-                {times.map(({ time, seats }, index) => (
-                  <button
-                    key={index}
-                    className="bg-gray-100 p-2 text-sm rounded">
-                    <div className="font-bold">{time}</div>
-                    <div className="text-gray-600">{seats}</div>
-                  </button>
-                ))}
+              <div className="w-[36.36%] flex flex-col">
+                <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
+                  시간
+                </h2>
+                <div className="grid grid-cols-2 gap-2 p-4">
+                  {times.map(({ time, seats }, index) => (
+                    <button
+                      key={index}
+                      className="bg-gray-100 p-2 text-sm rounded">
+                      <div className="font-bold">{time}</div>
+                      <div className="text-gray-600">{seats}</div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
