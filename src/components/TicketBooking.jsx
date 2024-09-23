@@ -118,7 +118,7 @@ const MovieBooking = () => {
         monthYearHeader = (
           <div
             key={`header-${year}-${month}`}
-            className="w-full text-center mb-2 text-[#666666]">
+            className="w-full text-center py-3 text-[#666666]">
             <div className="font-bold text-sm">{year}</div>
             <div className="font-bold text-3xl">{month + 1}</div>
           </div>
@@ -150,11 +150,19 @@ const MovieBooking = () => {
     });
   };
 
+  const handleRefresh = () => {
+    if (window.confirm("예매 정보를 초기화하시겠습니까?")) {
+      window.location.reload();
+    }
+  };
+
   return (
     <>
       <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8">
         <div className="flex justify-end mb-3">
-          <button className="flex items-center py-0.5 px-2 bg-[#F2F0E5] rounded border border-black text-sm">
+          <button
+            className="flex items-center py-0.5 px-2 bg-[#F2F0E5] rounded border border-black text-sm"
+            onClick={handleRefresh}>
             <IoMdRefresh size={24} className="mr-1" />
             예매 다시하기
           </button>
