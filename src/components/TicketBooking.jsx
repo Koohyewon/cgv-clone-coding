@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { IoMdRefresh } from "react-icons/io";
 
+export const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
 const MovieBooking = () => {
-  const [selectedMovie, setSelectedMovie] = useState("");
+  const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedTheater, setSelectedTheater] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [movies, setMovies] = useState([]);
@@ -20,7 +22,7 @@ const MovieBooking = () => {
         headers: {
           accept: "application/json",
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMDBmMjRjOTE3NTQ5NzQ3ZDNmYzdhOTRlOTU3YTM3MyIsIm5iZiI6MTcyMDY3NTI2OC44NDU0NDMsInN1YiI6IjY2OGYyZjE2NzI3ZTNiZDI3M2Y2YmIyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OV5n3pRizgsI70At8IHnwduNXCEHSp8ysSQwmJGU9uY",
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhMDBmMjRjOTE3NTQ5NzQ3ZDNmYzdhOTRlOTU3YTM3MyIsInNiZiI6MTcyMDY3NTI2OC44NDU0NDMsInN1YiI6IjY2OGYyZjE2NzI3ZTNiZDI3M2Y2YmIyMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OV5n3pRizgsI70At8IHnwduNXCEHSp8ysSQwmJGU9uY",
         },
       };
 
@@ -28,7 +30,7 @@ const MovieBooking = () => {
         const response = await axios.request(options);
         setMovies(response.data.results);
         if (response.data.results.length > 0) {
-          setSelectedMovie(response.data.results[0].title);
+          setSelectedMovie(response.data.results[0]);
         }
       } catch (error) {
         console.error("API를 불러오지 못했습니다.", error);
@@ -180,11 +182,11 @@ const MovieBooking = () => {
                     <li
                       key={index}
                       className={`cursor-pointer p-1 ${
-                        selectedMovie === movie.title
+                        selectedMovie && selectedMovie.id === movie.id
                           ? "bg-[#333333] text-white"
                           : ""
                       }`}
-                      onClick={() => setSelectedMovie(movie.title)}>
+                      onClick={() => setSelectedMovie(movie)}>
                       {movie.title}
                     </li>
                   ))}
@@ -244,11 +246,22 @@ const MovieBooking = () => {
 
       <div className="bg-black text-white p-4 ">
         <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto py-4 flex justify-between items-center">
-          <div>
-            <h3 className="font-bold">{selectedMovie}</h3>
-            <p>
-              {selectedTheater} | {selectedDate}
-            </p>
+          <div className="flex items-center">
+            {selectedMovie && (
+              <img
+                src={`${IMG_BASE_URL}${selectedMovie.poster_path}`}
+                alt={selectedMovie.title}
+                className="w-24 h-36 object-cover mr-4 rounded"
+              />
+            )}
+            <div>
+              <h3 className="font-bold">
+                {selectedMovie ? selectedMovie.title : ""}
+              </h3>
+              <p>
+                {selectedTheater} | {selectedDate}
+              </p>
+            </div>
           </div>
 
           <button className="bg-red-600 text-white px-6 py-2 rounded">
