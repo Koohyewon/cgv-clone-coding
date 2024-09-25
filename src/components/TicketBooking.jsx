@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { IoMdRefresh } from "react-icons/io";
+import TheaterSelector from "./TheaterSelector";
 
 export const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-const MovieBooking = () => {
+const TicketBooking = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedTheater, setSelectedTheater] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -66,23 +67,6 @@ const MovieBooking = () => {
     const day = date.getDate();
     return `${year}.${month}.${day}`;
   };
-
-  const theaters = [
-    "서울",
-    "강남",
-    "강변",
-    "건대입구",
-    "구로",
-    "대학로",
-    "동대문",
-    "등촌",
-    "명동",
-    "명동역 씨네라이브러리",
-    "목동",
-    "미아",
-    "방학",
-    "봉천",
-  ];
 
   const times = [
     { time: "10:30", seats: "80석" },
@@ -197,6 +181,12 @@ const MovieBooking = () => {
                 <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
                   극장
                 </h2>
+                <TheaterSelector onSelectTheater={setSelectedTheater} />
+              </div>
+              {/* <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
+                <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
+                  극장
+                </h2>
                 <ul className="overflow-auto flex-grow p-4">
                   {theaters.map((theater, index) => (
                     <li
@@ -211,7 +201,7 @@ const MovieBooking = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
 
               <div className="w-[9.09%] border-r-2 border-[#D4D3C9] flex flex-col">
                 <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
@@ -273,4 +263,4 @@ const MovieBooking = () => {
   );
 };
 
-export default MovieBooking;
+export default TicketBooking;
