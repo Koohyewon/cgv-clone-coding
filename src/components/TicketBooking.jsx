@@ -104,8 +104,7 @@ const TicketBooking = () => {
         monthYearHeader = (
           <div
             key={`header-${year}-${month}`}
-            className="w-full text-center py-3 text-[#666666]"
-          >
+            className="w-full text-center py-3 text-[#666666]">
             <div className="font-bold text-sm">{year}</div>
             <div className="font-bold text-3xl">{month + 1}</div>
           </div>
@@ -122,13 +121,11 @@ const TicketBooking = () => {
               ? "bg-[#333333] text-white border-2 border-black"
               : "bg-[#F2F0E5]"
           }`}
-          onClick={() => setSelectedDate(formattedDate)}
-        >
+          onClick={() => setSelectedDate(formattedDate)}>
           <span
             className={
               selectedDate === formattedDate ? "text-white" : weekdayColor
-            }
-          >
+            }>
             {weekday}
           </span>
           <span>{date.getDate()}</span>
@@ -151,8 +148,7 @@ const TicketBooking = () => {
         <div className="flex justify-end mb-3">
           <button
             className="flex items-center py-0.5 px-2 bg-[#F2F0E5] rounded border border-black text-sm"
-            onClick={handleRefresh}
-          >
+            onClick={handleRefresh}>
             <IoMdRefresh size={24} className="mr-1" />
             예매 다시하기
           </button>
@@ -174,8 +170,7 @@ const TicketBooking = () => {
                           ? "bg-[#333333] text-white"
                           : ""
                       }`}
-                      onClick={() => setSelectedMovie(movie)}
-                    >
+                      onClick={() => setSelectedMovie(movie)}>
                       {movie.title}
                     </li>
                   ))}
