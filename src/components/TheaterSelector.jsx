@@ -37,20 +37,22 @@ const TheaterSelector = ({ onSelectTheater }) => {
 
   return (
     <div className="flex border-t border-[#D4D3C9] p-4">
-      <div className="w-1/2 border-r border-[#D4D3C9]">
+      <div className="w-1/2 bg-[#E6E4D9]">
         <ul>
           {regionsWithCount.map(({ name, count }) => (
             <li
               key={name}
-              className={`cursor-pointer p-2 ${
-                selectedRegion === name ? "bg-[#333333] text-white" : ""
+              className={`text-sm text-right cursor-pointer p-2 border border-[#F2F0E5] ${
+                selectedRegion === name ? "bg-[#F2F0E5]" : ""
               }`}
-              onClick={() => handleRegionClick(name)}>
+              onClick={() => handleRegionClick(name)}
+            >
               {name}({count})
             </li>
           ))}
         </ul>
       </div>
+
       <div className="w-1/2">
         <ul>
           {selectedRegion &&
@@ -60,7 +62,8 @@ const TheaterSelector = ({ onSelectTheater }) => {
                 className={`cursor-pointer p-2 ${
                   selectedTheater === theater ? "bg-[#333333] text-white" : ""
                 }`}
-                onClick={() => handleTheaterClick(theater)}>
+                onClick={() => handleTheaterClick(theater)}
+              >
                 {theater}
               </li>
             ))}

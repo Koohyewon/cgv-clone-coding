@@ -104,7 +104,8 @@ const TicketBooking = () => {
         monthYearHeader = (
           <div
             key={`header-${year}-${month}`}
-            className="w-full text-center py-3 text-[#666666]">
+            className="w-full text-center py-3 text-[#666666]"
+          >
             <div className="font-bold text-sm">{year}</div>
             <div className="font-bold text-3xl">{month + 1}</div>
           </div>
@@ -121,11 +122,13 @@ const TicketBooking = () => {
               ? "bg-[#333333] text-white border-2 border-black"
               : "bg-[#F2F0E5]"
           }`}
-          onClick={() => setSelectedDate(formattedDate)}>
+          onClick={() => setSelectedDate(formattedDate)}
+        >
           <span
             className={
               selectedDate === formattedDate ? "text-white" : weekdayColor
-            }>
+            }
+          >
             {weekday}
           </span>
           <span>{date.getDate()}</span>
@@ -144,11 +147,12 @@ const TicketBooking = () => {
 
   return (
     <>
-      <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8">
+      <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8 text-sm">
         <div className="flex justify-end mb-3">
           <button
             className="flex items-center py-0.5 px-2 bg-[#F2F0E5] rounded border border-black text-sm"
-            onClick={handleRefresh}>
+            onClick={handleRefresh}
+          >
             <IoMdRefresh size={24} className="mr-1" />
             예매 다시하기
           </button>
@@ -158,7 +162,7 @@ const TicketBooking = () => {
           <div className="bg-[#F2F0E5] overflow-hidden">
             <div className="flex border-b h-[600px]">
               <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
-                <h2 className="w-full h-9 bg-[#333333] text-white font-bold flex justify-center items-center flex-shrink-0">
+                <h2 className="w-full h-9 bg-[#333333] text-base text-white font-bold flex justify-center items-center flex-shrink-0">
                   영화
                 </h2>
                 <ul className="overflow-auto flex-grow p-4">
@@ -170,7 +174,8 @@ const TicketBooking = () => {
                           ? "bg-[#333333] text-white"
                           : ""
                       }`}
-                      onClick={() => setSelectedMovie(movie)}>
+                      onClick={() => setSelectedMovie(movie)}
+                    >
                       {movie.title}
                     </li>
                   ))}
@@ -178,7 +183,7 @@ const TicketBooking = () => {
               </div>
 
               <div className="w-[27.27%] border-r-2 border-[#D4D3C9] flex flex-col">
-                <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
+                <h2 className="w-full h-9 bg-[#333333] text-base text-white text-center font-bold flex justify-center items-center flex-shrink-0">
                   극장
                 </h2>
                 <TheaterSelector onSelectTheater={setSelectedTheater} />
@@ -204,7 +209,7 @@ const TicketBooking = () => {
               </div> */}
 
               <div className="w-[9.09%] border-r-2 border-[#D4D3C9] flex flex-col">
-                <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
+                <h2 className="w-full h-9 bg-[#333333] text-base text-white text-center font-bold flex justify-center items-center flex-shrink-0">
                   날짜
                 </h2>
                 <div className="text-center overflow-auto flex-grow px-2.5 py-4">
@@ -215,19 +220,29 @@ const TicketBooking = () => {
               </div>
 
               <div className="w-[36.36%] flex flex-col">
-                <h2 className="w-full h-9 bg-[#333333] text-white text-center font-bold flex justify-center items-center flex-shrink-0">
+                <h2 className="w-full h-9 bg-[#333333] text-base text-white text-center font-bold flex justify-center items-center flex-shrink-0">
                   시간
                 </h2>
-                <div className="grid grid-cols-2 gap-2 p-4">
+
+                <div className="p-4">
+                  <div className="flex items-center">
+                    <div className="w-6 h-6 bg-[url('http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/icon/icon_morning_night.png')] bg-no-repeat bg-[0_0px]"></div>
+                    <span>모닝</span>
+                    <img src="http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/icon/icon_morning_night.png" />
+                    <span>심야</span>
+                  </div>
+                </div>
+                {/* <div className="grid grid-cols-2 gap-2 p-4">
                   {times.map(({ time, seats }, index) => (
                     <button
                       key={index}
-                      className="bg-gray-100 p-2 text-sm rounded">
+                      className="bg-gray-100 p-2 text-sm rounded"
+                    >
                       <div className="font-bold">{time}</div>
                       <div className="text-gray-600">{seats}</div>
                     </button>
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
