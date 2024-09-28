@@ -220,10 +220,11 @@ const TicketBooking = () => {
                 </h2>
 
                 <div className="p-4">
-                  <div className="flex items-center">
-                    <div className="w-6 h-6 bg-[url('http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/icon/icon_morning_night.png')] bg-no-repeat bg-[0_0px]"></div>
-                    <span>모닝</span>
-                    <img src="http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/icon/icon_morning_night.png" />
+                  <div className="flex items-center pb-2 border-b-[3px] border-[#CFCDC3]">
+                    <div className="w-4 h-4 bg-[url('http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/icon/icon_morning_night.png')] bg-no-repeat bg-[0_0px] mr-1"></div>
+                    <span className="mr-3">모닝</span>
+
+                    <div className="w-4 h-4 bg-[url('http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/icon/icon_morning_night.png')] bg-no-repeat bg-[0_-20px]"></div>
                     <span>심야</span>
                   </div>
                 </div>
