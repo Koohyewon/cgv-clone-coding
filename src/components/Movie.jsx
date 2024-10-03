@@ -97,13 +97,23 @@ export default function Movie() {
           {movies.map((movie, index) => (
             <React.Fragment key={movie.id}>
               {index === 3 && (
-                <div className="w-4/5 h-full mx-auto text-2xl font-bold bg-black p-5 flex flex-col text-white">
+                <div className="w-4/5 h-full mx-auto text-2xl font-bold bg-[#222221] p-5 flex flex-col text-white">
                   <img
                     src="https://adimg.cgv.co.kr/images/202302/house/CGV_BUGS_160x300.png"
                     alt="Ad"
                     className="w-full"
                   />
-                  <p>프로모션</p>
+                  <div className="text-sm mt-5">
+                    <p className="border-b-4 border-white pb-1.5">
+                      <span className="text-sm text-[#E71A0F] border-[3px] border-[#E71A0F] mr-2 px-1">
+                        AD
+                      </span>
+                      CGV X Bugs
+                    </p>
+                    <p className="border-b-4 border-white py-1.5">
+                      MUSIC & Movie 감성 페어링
+                    </p>
+                  </div>
                 </div>
               )}
 
