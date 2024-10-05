@@ -8,6 +8,15 @@
     format("woff");
 }
 
-body {
+.pretendard {
   font-family: "Pretendard-Regular";
+}
+
+body {
+  font-family: "Tahoma", "돋움", dotum, "Nanum Gothic", sans-serif;
+}
+
+.noto-sans {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 400; /* Regular */
 }

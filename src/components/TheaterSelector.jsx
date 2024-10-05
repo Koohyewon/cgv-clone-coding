@@ -45,8 +45,7 @@ const TheaterSelector = ({ onSelectTheater }) => {
               className={`text-sm text-right cursor-pointer p-2 border border-[#F2F0E5] ${
                 selectedRegion === name ? "bg-[#F2F0E5]" : ""
               }`}
-              onClick={() => handleRegionClick(name)}
-            >
+              onClick={() => handleRegionClick(name)}>
               {name}({count})
             </li>
           ))}
@@ -62,8 +61,7 @@ const TheaterSelector = ({ onSelectTheater }) => {
                 className={`cursor-pointer p-2 ${
                   selectedTheater === theater ? "bg-[#333333] text-white" : ""
                 }`}
-                onClick={() => handleTheaterClick(theater)}
-              >
+                onClick={() => handleTheaterClick(theater)}>
                 {theater}
               </li>
             ))}
