@@ -74,7 +74,7 @@ export default function Movie() {
 
   return (
     <>
-      <div className="w-[65%] min-w-[980px] mx-auto pt-10 pb-20">
+      <div className="pretendard w-[996px] mx-auto pt-10 pb-20">
         <div className="border-b-[3px] border-b-black pb-6 text-4xl font-bold">
           무비차트
         </div>
@@ -93,11 +93,11 @@ export default function Movie() {
           </select>
         </div>
 
-        <div className="mt-8 grid grid-cols-4 gap-x-4 gap-y-16">
+        <div className="mt-8 grid grid-cols-4 gap-x-[70px] gap-y-16">
           {movies.map((movie, index) => (
             <React.Fragment key={movie.id}>
               {index === 3 && (
-                <div className="w-4/5 h-full mx-auto text-2xl font-bold bg-[#222221] p-5 flex flex-col text-white">
+                <div className="w-full h-full mx-auto text-2xl font-bold bg-[#222221] p-5 flex flex-col text-white">
                   <img
                     src="https://adimg.cgv.co.kr/images/202302/house/CGV_BUGS_160x300.png"
                     alt="Ad"
@@ -118,18 +118,18 @@ export default function Movie() {
               )}
 
               {index !== 3 && (
-                <div className="w-4/5 mx-auto">
+                <div className="w-full mx-auto">
                   <div
-                    className={`h-9 mb-1 rounded-t-lg text-white text-xl font-bold flex items-center justify-center ${
+                    className={`h-8 mb-1 text-white text-xl font-bold flex items-center justify-center ${
                       index < 3 ? "bg-[#FB4357]" : "bg-black"
                     }`}>
-                    No.{index < 3 ? index + 1 : index + 2}
+                    No.{index < 3 ? index + 1 : index}
                   </div>
 
                   <img
                     src={`${IMG_BASE_URL}${movie.poster_path}`}
                     alt={movie.title}
-                    className="w-full max-h-[330px] rounded-b-lg cursor-pointer"
+                    className="w-full max-h-[260px] cursor-pointer"
                     onClick={() => navigateToMovieDetail(movie.id)}
                   />
 
@@ -156,7 +156,7 @@ export default function Movie() {
                   </div>
 
                   <button
-                    className="w-24 h-7 mr-1.5 rounded-md float-right bg-red-500 text-white text-sm font-bold"
+                    className="w-24 h-7 mr-1.5 rounded-[5px] float-left bg-[#FF4357] text-white text-sm font-bold"
                     onClick={() => navigateToTicketPage(movie.id)}>
                     예매하기
                   </button>

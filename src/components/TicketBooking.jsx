@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { IoMdRefresh } from "react-icons/io";
 import TheaterSelector from "./TheaterSelector";
+import BookingHeaderButton from "./BookingHeaderButton";
 
 export const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -136,23 +136,10 @@ const TicketBooking = () => {
     });
   };
 
-  const handleRefresh = () => {
-    if (window.confirm("예매 정보를 초기화하시겠습니까?")) {
-      window.location.reload();
-    }
-  };
-
   return (
     <>
       <div className="w-[65%] min-w-[980px] max-w-7xl mx-auto mt-8 text-sm">
-        <div className="flex justify-end mb-3">
-          <button
-            className="flex items-center py-0.5 px-2 bg-[#F2F0E5] rounded border border-black text-sm"
-            onClick={handleRefresh}>
-            <IoMdRefresh size={24} className="mr-1" />
-            예매 다시하기
-          </button>
-        </div>
+        <BookingHeaderButton />
 
         <div className="border-2 border-[#D4D3C9]">
           <div className="bg-[#F2F0E5] overflow-hidden">

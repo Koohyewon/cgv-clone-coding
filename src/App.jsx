@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import MovieDetail from "./pages/MovieDetail";
 import Ticket from "./pages/Ticket";
+import SeatSelectionPage from "./pages/SeatSelectionPage";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -18,6 +19,7 @@ const routes = [
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
   { path: "/ticket", element: <Ticket /> },
+  { path: "/seat", element: <SeatSelectionPage /> },
 ];
 
 function App() {
