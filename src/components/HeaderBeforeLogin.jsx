@@ -6,7 +6,7 @@ import { IoPersonAddOutline } from "react-icons/io5";
 const HeaderLink = ({ to, icon: Icon, text }) => (
   <Link to={to}>
     <div className="flex flex-col items-center mx-3 p-2">
-      <Icon size={23} className="mb-2" />
+      <Icon size={23} className="mb-2 text-[#3D3D3D]" />
       <span>{text}</span>
     </div>
   </Link>
@@ -14,7 +14,7 @@ const HeaderLink = ({ to, icon: Icon, text }) => (
 
 export default function HeaderBeforeLogin() {
   return (
-    <div className="noto-sans w-[996px] h-28 mx-auto flex justify-between py-5">
+    <div className="noto-sans w-[996px] h-28 mx-auto flex justify-between items-center py-5">
       <Link to="/">
         <div className="flex text-2xl font-bold">
           <img

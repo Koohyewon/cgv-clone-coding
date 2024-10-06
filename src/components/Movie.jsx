@@ -74,7 +74,7 @@ export default function Movie() {
 
   return (
     <>
-      <div className="pretendard w-[996px] mx-auto pt-10 pb-20">
+      <div className="noto-sans w-[996px] mx-auto pt-10 pb-20">
         <div className="border-b-[3px] border-b-black pb-6 text-4xl font-bold">
           무비차트
         </div>
@@ -103,9 +103,9 @@ export default function Movie() {
                     alt="Ad"
                     className="w-full"
                   />
-                  <div className="text-sm mt-5">
+                  <div className="text-xs mt-5">
                     <p className="border-b-4 border-white pb-1.5">
-                      <span className="text-sm text-[#E71A0F] border-[3px] border-[#E71A0F] mr-2 px-1">
+                      <span className="text-[11px] text-[#E71A0F] border-2 border-[#E71A0F] mr-2 px-1">
                         AD
                       </span>
                       CGV X Bugs
@@ -133,14 +133,14 @@ export default function Movie() {
                     onClick={() => navigateToMovieDetail(movie.id)}
                   />
 
-                  <div className="px-1.5 pt-2 pb-4">
+                  <div className="pt-2 pb-4">
                     <div
                       className="font-bold h-5 overflow-hidden cursor-pointer"
                       onClick={() => navigateToMovieDetail(movie.id)}>
                       {movie.title}
                     </div>
 
-                    <div className="flex flex-wrap items-center mt-2 font-bold text-sm">
+                    <div className="flex flex-wrap items-center mt-2 font-bold text-xs text-[#666666]">
                       <div className="flex items-center">
                         <FaRegClock />
                         <span className="mx-1">개봉일</span>
@@ -156,7 +156,7 @@ export default function Movie() {
                   </div>
 
                   <button
-                    className="w-24 h-7 mr-1.5 rounded-[5px] float-left bg-[#FF4357] text-white text-sm font-bold"
+                    className="w-[97px] h-[25px] rounded-[5px] bg-[#FF4357] text-white text-[13px] font-bold"
                     onClick={() => navigateToTicketPage(movie.id)}>
                     예매하기
                   </button>

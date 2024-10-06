@@ -29,8 +29,7 @@ const MovieTitle = ({ title, originalTitle }) => (
 const BookingButton = ({ onClick }) => (
   <button
     className="h-14 w-full bg-[#FB4357] text-white text-xl rounded-full mt-4"
-    onClick={onClick}
-  >
+    onClick={onClick}>
     예매하기
   </button>
 );
@@ -57,7 +56,7 @@ export default function MovieDetailInfo() {
   ];
 
   return (
-    <div className="w-[65%] min-w-[980px] mx-auto p-20 font-bold">
+    <div className="pretendard w-[996px] min-w-[980px] mx-auto py-24 px-10 font-bold">
       <div className="flex justify-center items-center">
         <MoviePoster path={movie.poster_path} title={movie.title} />
 

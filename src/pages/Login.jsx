@@ -39,7 +39,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="min-w-[350px] w-1/4 mx-auto my-20">
+      <div className="pretendard min-w-[350px] w-1/4 mx-auto my-20">
         <div className="text-2xl font-bold">
           아이디와 비밀번호를
           <br /> 입력해주세요.
@@ -79,8 +79,7 @@ export default function Login() {
         </div>
         <button
           className="bg-red-400 w-full h-12 text-white font-bold rounded-lg mt-12"
-          disabled={notAllow}
-        >
+          disabled={notAllow}>
           확인
         </button>
       </div>

@@ -39,7 +39,7 @@ export default function SignUp() {
 
   return (
     <>
-      <div className="min-w-[350px] w-1/4 mx-auto my-20">
+      <div className="pretendard min-w-[350px] w-1/4 mx-auto my-20">
         <div className="text-2xl font-bold">
           CGV에 오신 것을 환영합니다!
           <br /> 가입에 필요한 정보를 작성해주세요
@@ -79,8 +79,7 @@ export default function SignUp() {
         </div>
         <button
           className="bg-red-400 w-full h-12 text-white font-bold rounded-lg mt-12"
-          disabled={notAllow}
-        >
+          disabled={notAllow}>
           확인
         </button>
       </div>
