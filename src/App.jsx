@@ -12,6 +12,9 @@ import SignUp from "./pages/SignUp";
 import MovieDetail from "./pages/MovieDetail";
 import Ticket from "./pages/Ticket";
 import SeatSelectionPage from "./pages/SeatSelectionPage";
+import PaymentPage from "./pages/PaymentPage";
+import Banner from "./components/Banner";
+import FixedNav from "./components/FixedNav";
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -19,7 +22,8 @@ const routes = [
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
   { path: "/ticket", element: <Ticket /> },
-  { path: "/seat", element: <SeatSelectionPage /> },
+  { path: "/ticket/seat", element: <SeatSelectionPage /> },
+  { path: "/ticket/payment", element: <PaymentPage /> },
 ];
 
 function App() {
@@ -38,13 +42,17 @@ function App() {
         <div className="flex-grow">
           {isLoggedIn ? (
             <>
+              <Banner />
               <HeaderAfterLogin />
               <Nav />
+              <FixedNav />
             </>
           ) : (
             <>
+              <Banner />
               <HeaderBeforeLogin />
               <Nav />
+              <FixedNav />
             </>
           )}
           <Routes>
