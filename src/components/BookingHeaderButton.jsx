@@ -1,10 +1,14 @@
 import React from "react";
 import { IoMdRefresh } from "react-icons/io";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 export default function BookingHeaderButton() {
+  const navigate = useNavigate();
+
   const handleRefresh = () => {
     if (window.confirm("예매 정보를 초기화하시겠습니까?")) {
+      navigate("/ticket", { replace: true });
       window.location.reload();
     }
   };
