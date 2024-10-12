@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import { FaRegClock } from "react-icons/fa";
 import { FaRegThumbsUp } from "react-icons/fa";
+import api from "../api/api";
 
 export const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 export default function Movie() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [movies, setMovies] = useState([]);
   const [sortOrder, setSortOrder] = useState("1");
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const fetchMovies = async () => {
       const options = {
         method: "GET",
@@ -31,7 +34,33 @@ export default function Movie() {
           (a, b) => b.vote_average - a.vote_average
         );
         setMovies(sortedMovies);
-        //setMovies(response.data.results);
+
+        if (location.state && location.state.selectedMovie) {
+          setSelectedMovie(location.state.selectedMovie);
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("API를 불러오지 못했습니다.", error);
+      }
+    };
+
+    fetchMovies();
+  }, [location]); */
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await api().get("/update-movies");
+        console.log(response);
+
+        const sortedMovies = response.data.sort(
+          (a, b) => b.voteAverage - a.voteAverage
+        );
+        setMovies(sortedMovies);
+
+        if (location.state && location.state.selectedMovie) {
+          setSelectedMovie(location.state.selectedMovie);
+        }
         console.log(sortedMovies);
       } catch (error) {
         console.error("API를 불러오지 못했습니다.", error);
@@ -39,18 +68,18 @@ export default function Movie() {
     };
 
     fetchMovies();
-  }, []);
+  }, [location]);
 
   //셀렉트 박스 정렬방식
   const sortMovies = (order) => {
     let sortedMovies = [...movies];
     if (order === "1") {
       // Sort by rating (descending)
-      sortedMovies.sort((a, b) => b.vote_average - a.vote_average);
+      sortedMovies.sort((a, b) => b.voteAverage - a.voteAverage);
     } else if (order === "2") {
       // Sort by release date (most recent first)
       sortedMovies.sort(
-        (a, b) => new Date(b.release_date) - new Date(a.release_date)
+        (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
       );
     }
     setMovies(sortedMovies);
@@ -69,7 +98,7 @@ export default function Movie() {
 
   const navigateToTicketPage = (movieId) => {
     const selected = movies.find((movie) => movie.id === movieId);
-    navigate("/ticket", { state: { movie: selected } });
+    navigate("/ticket", { state: { selectedMovie: selected } });
   };
 
   return (
@@ -127,7 +156,7 @@ export default function Movie() {
                   </div>
 
                   <img
-                    src={`${IMG_BASE_URL}${movie.poster_path}`}
+                    src={`${IMG_BASE_URL}${movie.posterPath}`}
                     alt={movie.title}
                     className="w-full max-h-[260px] cursor-pointer"
                     onClick={() => navigateToMovieDetail(movie.id)}
@@ -144,13 +173,13 @@ export default function Movie() {
                       <div className="flex items-center">
                         <FaRegClock />
                         <span className="mx-1">개봉일</span>
-                        <span>{movie.release_date}</span>
+                        <span>{movie.releaseDate}</span>
                       </div>
                       <div className="mx-2 h-4 w-px bg-gray-300"></div>
                       <div className="flex items-center">
                         <FaRegThumbsUp />
                         <span className="mx-1">평점</span>
-                        <span>{movie.vote_average.toFixed(1)}</span>
+                        <span>{movie.voteAverage.toFixed(1)}</span>
                       </div>
                     </div>
                   </div>
