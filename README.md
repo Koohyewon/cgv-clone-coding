@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# CGV 클론코딩
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> **학습 목적 프로젝트입니다.** CGV 웹사이트의 UI와 예매 플로우를 직접 구현하며 React 개발 패턴을 연습하기 위해 만들었습니다. 실제 서비스와 무관하며, CGV의 UI·기능을 학습 참고용으로 클론한 것입니다.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 프로젝트 개요
 
-### `npm start`
+CGV 웹사이트를 참고해 영화 목록 조회부터 좌석 선택·결제까지 이어지는 예매 흐름을 직접 구현했습니다. 복잡한 상태 흐름을 여러 페이지에 걸쳐 관리하는 방법, 그리고 실제 서비스에 가까운 UI를 Tailwind CSS로 재현하는 것이 주된 학습 목표였습니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 기술 스택
 
-### `npm test`
+| 분류 | 사용 기술 |
+|------|-----------|
+| UI | React 18, Tailwind CSS v3 |
+| 라우팅 | React Router DOM v6 |
+| HTTP 통신 | Axios |
+| 아이콘 | react-icons, lucide-react |
+| 빌드 | Create React App |
+| 백엔드 | Spring Boot (팀 프로젝트, `localhost:8080`) |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 구현한 화면과 기능
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 무비차트 (홈)
+백엔드 API(`/update-movies`)로 영화 목록을 받아 4열 그리드로 렌더링합니다. 평점순·최신순 정렬을 select 이벤트로 처리하고, 포스터 클릭 시 상세 페이지로, 예매하기 버튼 클릭 시 선택한 영화가 예매 페이지에 미리 반영되도록 `useNavigate`로 state를 전달했습니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 영화 상세
+TMDB 이미지 URL을 조합해 포스터를 표시하고, 장르·관람등급·개봉일·줄거리를 출력합니다. 예매하기 버튼이 해당 영화를 선택한 상태로 예매 페이지를 엽니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 예매 (영화·극장·날짜·시간 선택)
+4열 패널 레이아웃으로 영화 목록, 극장 선택, 날짜 선택, 상영 시간표를 한 화면에 배치했습니다. 날짜는 오늘부터 2주치를 동적으로 생성하고 요일에 따라 색상을 다르게 표시했습니다. 네 가지 항목이 모두 선택되었을 때만 하단 이동 버튼이 활성화됩니다.
 
-### `npm run eject`
+### 좌석 선택
+A~E행 × 5열의 좌석 그리드를 직접 구현했습니다. 인원 유형(일반·청소년·경로·우대)별 수를 선택하면 선택 가능한 최대 좌석 수가 결정됩니다. 좌석 클릭 시 인원이 2명 이상이면 인접 좌석을 함께 자동 선택하고, hover 시에도 같은 방식으로 미리 보여줍니다. 이미 예약된 좌석은 API(`/seats/available`)로 받아 비활성화 처리했습니다. 선택이 완료되면 하단 요약 바에 좌석 번호와 인원별 금액·합계가 실시간으로 표시됩니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 결제
+좌석 선택 단계에서 `useNavigate`로 넘어온 예매 정보(영화·극장·날짜·좌석·인원·금액)를 결제 화면에서 그대로 이어받아 표시합니다. 결제 수단(신용카드·휴대폰·간편결제 등)을 라디오 버튼으로 선택하고, 신용카드 선택 시 카드사 목록이 추가로 노출됩니다. 결제하기 버튼 클릭 시 `/seats/book`을 POST합니다.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 회원가입·로그인
+아이디(영문+숫자 6자 이상)와 비밀번호(영문+숫자+특수문자 8~15자) 형식을 정규식으로 실시간 검증하고, 조건을 충족할 때만 버튼이 활성화됩니다. 로그인 성공 시 JWT 토큰을 `localStorage`에 저장하고, `App.jsx`에서 토큰 유무에 따라 로그인 전·후 헤더를 분기합니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 네비게이션
+메인 네비게이션은 호버 시 전체 카테고리 드롭다운이 슬라이드 애니메이션으로 나타납니다. 스크롤이 일정 높이를 넘으면 `scroll` 이벤트로 감지해 상단 고정 네비게이션으로 전환됩니다.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 배운 점
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**다단계 상태 전달** — 예매 플로우가 3개 페이지(예매 → 좌석 → 결제)에 걸쳐 있어, React Router의 `useNavigate`·`useLocation`으로 state를 체이닝하는 방식을 익혔습니다. 상태가 누락되었을 때 이전 페이지로 리다이렉트하는 방어 처리도 직접 작성해봤습니다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**조건부 UI 활성화** — 여러 선택 항목이 모두 채워졌을 때만 버튼이 활성화되는 패턴을 `useEffect`와 boolean 상태로 구현하면서, 파생 상태를 어떻게 관리할지 고민해볼 수 있었습니다.
 
-### Code Splitting
+**컴포넌트 분리** — `TheaterSeating`, `SeatRow`, `BookingHeaderButton` 등 역할 단위로 컴포넌트를 나누면서 props 인터페이스 설계를 연습했습니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Tailwind CSS 활용** — 픽셀 단위의 세부 레이아웃을 유틸리티 클래스만으로 구현하면서, 디자인 시스템 없이 임의 값(`w-[996px]`, `text-[#FB4357]`)을 다루는 방법을 익혔습니다.
